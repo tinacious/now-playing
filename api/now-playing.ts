@@ -24,7 +24,12 @@ export default async function (req: NowRequest, res: NowResponse) {
   }
 
   res.setHeader("Content-Type", "image/svg+xml");
-  res.setHeader("Cache-Control", "s-maxage=1, stale-while-revalidate");
+
+  /**
+   * Disable cache by not setting Cache-Control, which means the lambda will not be cahced.
+   * Ref: https://vercel.com/docs/serverless-functions/edge-caching#what-is-cached
+   */
+  // res.setHeader("Cache-Control", "s-maxage=1, stale-while-revalidate");
 
   const { duration_ms: duration, name: track } = item;
   const { images = [] } = item.album || {};
